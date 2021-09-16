@@ -1,0 +1,162 @@
+﻿<Window x:Class="Upadate.MainWindow"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:conv ="clr-namespace:Upadate.Converter"
+        xmlns:local="clr-namespace:Upadate"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Window.Resources>
+        <conv:konwerter x:Key="Konwersja"/>
+    </Window.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="1*"/>
+
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0">
+
+
+            <DataGrid x:Name="zlecenia" ItemsSource="{Binding Lista_zlecen}" SelectedItem="{Binding WybraneZlecenie}" AutoGenerateColumns="False" Margin="10,10,0,50.2">
+                <DataGrid.CellStyle>
+                    <Style TargetType="DataGridCell">
+                        <!--<Style Property ="FontWeight" Value = "Normal"/>-->
+                        <Style.Triggers>
+
+                            <DataTrigger Binding="{Binding StatusMES, Mode=TwoWay, Converter= {StaticResource Konwersja}}" Value="zero">
+                                <Setter Property="Foreground" Value="#FF3D3A"/>
+                                <Setter Property="Foreground" Value="#FFA4D21E"/>
+                                <Setter Property="Foreground" Value="#FF3F8000"/>
+                            </DataTrigger>
+
+                            <DataTrigger Binding="{Binding StatusMES, Mode=TwoWay, Converter= {StaticResource Konwersja}}" Value="dwa">
+                                <Setter Property="Foreground" Value="#FFD0FF00"/>
+                                <Setter Property="Foreground" Value="Yellow"/>
+                                <Setter Property="Foreground" Value="Chocolate"/>
+                            </DataTrigger>
+
+
+                        </Style.Triggers>
+                    </Style>
+                </DataGrid.CellStyle>
+                <DataGrid.Columns>
+
+                    <DataGridTemplateColumn>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button ToolTip="Sprawdź stany magazynowe" Height="20"
+                                    Background="{x:Null}" BorderBrush="{x:Null}"
+                                    Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type Window}, Mode=FindAncestor}, Path=DataContext.InfoCommand}">
+                                    <materialDesign:PackIcon Kind="InfoOutline" Margin="-10" Width="18" Height="18" Foreground="BlueViolet"/>
+                                </Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Header="ID" Binding="{Binding Zlecenie_IdErp}" />
+                    <DataGridTextColumn Header="Nr" Binding="{Binding Zlecenie_Numer}"/>
+                    <DataGridTextColumn Header="IdPozycja" Binding="{Binding Zlecenie_IdPozycji}"/>
+                    <DataGridTextColumn Header="Ilosc" Binding="{Binding Zlecenie_Ilosc}"/>
+                    <DataGridTextColumn Header="Zlecenie" Binding="{Binding Zlecenie_WymaganaDataProdukcji}"/>
+                    <DataGridTextColumn Header="DataWystawienia" Binding="{Binding DataWstawieniaERP}"/>
+                    <DataGridTextColumn Header="DataPobrania" Binding="{Binding DataPobraniaMES}"/>
+                    <DataGridTextColumn Header="StatusMES" Binding="{Binding StatusMES}"/>
+                    <DataGridTextColumn Header="Aktywny" Binding="{Binding Aktywny}"/>
+                    <DataGridTextColumn Header="Kod" Binding="{Binding Zlecenie_Kod}"/>
+
+                    <!--<DataGridTextColumn Header =" ZlecenieId"
+                                               AllowResizing =" ture"
+                                               MappingName =" Zlecenie Id"
+                                               FilterRowCondition =" Equals"/>-->
+
+
+
+
+
+                </DataGrid.Columns>
+            </DataGrid>
+            <DockPanel HorizontalAlignment="Right"  Height="32" LastChildFill="False" VerticalAlignment="Bottom" Width="764" Margin="0,0,118.8,10" RenderTransformOrigin="0.495,10.929">
+                <Button x:Name="Opcje" Content="Opcje" Width="88" RenderTransformOrigin="1.421,0.604" Height="Auto" HorizontalAlignment="Left" Margin="120,-1,120,1" AutomationProperties.Name="Opcje" Click="Opcje_Click" />
+                <Button Click ="Opcje1_Copy_Click"  x:Name="Opcje_Copy1" Content="Opcje1" VerticalAlignment="Top" Width="88" RenderTransformOrigin="1.421,0.604" Height="32" HorizontalAlignment="Left" Margin="15,-1,15,0" AutomationProperties.Name="Opcje1" />
+
+
+            </DockPanel>
+        </Grid>
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="366*"/>
+                    <ColumnDefinition Width="31*"/>
+                </Grid.ColumnDefinitions>
+                <DataGrid x:Name="marsz" ItemsSource="{Binding Lista_marsz}" Margin="27,10,0,9.8" Grid.ColumnSpan="2">
+                </DataGrid>
+            </Grid>
+
+
+            <Grid Grid.Row="1">
+                <DataGrid x:Name="bom" ItemsSource="{Binding Lista_bom}" Margin="28,0,0,50.02">
+                    <DataGrid.CellStyle>
+                        <Style TargetType="DataGridCell">
+                            <Style.Triggers>
+
+                                <DataTrigger Binding="{Binding Bom_TypPozycji, Mode=TwoWay, Converter= {StaticResource Konwersja}}" Value="jeden">
+                                    <Setter Property="Foreground" Value="#FF3D3A"/>
+                                    <Setter Property="Foreground" Value="#FFA4D21E"/>
+                                    <Setter Property="Foreground" Value="#FF150080"/>
+                                </DataTrigger>
+
+                                <DataTrigger Binding="{Binding Bom_TypPozycji, Mode=TwoWay, Converter= {StaticResource Konwersja}}" Value="dwa">
+                                    <Setter Property="Foreground" Value="#FF3D3A"/>
+                                    <Setter Property="Foreground" Value="#FFA4D21E"/>
+                                    <Setter Property="Foreground" Value="#FF800057"/>
+                                </DataTrigger>
+
+                                <DataTrigger Binding="{Binding Bom_TypPozycji, Mode=TwoWay, Converter= {StaticResource Konwersja}}" Value="trzy">
+                                    <Setter Property="Foreground" Value="#FF3D3A"/>
+                                    <Setter Property="Foreground" Value="#FFA4D21E"/>
+                                    <Setter Property="Foreground" Value="Yellow"/>
+                                </DataTrigger>
+
+                                <DataTrigger Binding="{Binding Bom_TypPozycji, Mode=TwoWay, Converter= {StaticResource Konwersja}}" Value="piec">
+                                    <Setter Property="Foreground" Value="#FF3D3A"/>
+                                    <Setter Property="Foreground" Value="#FFA4D21E"/>
+                                    <Setter Property="Foreground" Value="#FF3F8000"/>
+                                </DataTrigger>
+
+
+                            </Style.Triggers>
+                        </Style>
+                    </DataGrid.CellStyle>
+
+
+                </DataGrid>
+            </Grid>
+        </Grid>
+
+
+        <!--<materialDesign:DialogHost IsOpen="{Binding OtworzDialogBom}" Background="Blue" Width="500" Height="500">
+            <materialDesign:DialogHost.DialogContent>
+                <DataGrid x:Name="bom1" ItemsSource="{Binding Lista_bom}">
+
+                </DataGrid>
+            </materialDesign:DialogHost.DialogContent>
+            </materialDesign:DialogHost>-->
+
+        <!--<materialDesign:DialogHost IsOpen="{Binding OtworzDialogMarsz}" Background="Red" Width="500" Height="500">
+            <materialDesign:DialogHost.DialogContent>
+                <DataGrid x:Name="marsz1" ItemsSource="{Binding Lista_marsz}">
+
+                </DataGrid>
+            </materialDesign:DialogHost.DialogContent>
+        </materialDesign:DialogHost>-->
+
+    </Grid>
+
+
+</Window>
