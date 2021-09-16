@@ -76,44 +76,44 @@ namespace Upadate.MainViewModel
             }
 
         }
-        //private ICommand infoCommand;
-        //public ICommand InfoCommand
-        //{
-        //    get
-        //    {
-        //        if (infoCommand == null)
-        //        {
-        //            infoCommand = new RelayCommand(parametr => Wyswietl(), parametr =>
-        //            {
-        //                return true;
-        //            });
-        //        }
-        //        return infoCommand;
-        //    }
-        //}
+        private ICommand infoCommand;
+        public ICommand InfoCommand
+        {
+            get
+            {
+                if (infoCommand == null)
+                {
+                    infoCommand = new RelayCommand(parametr => Wyswietl(), parametr =>
+                    {
+                        return true;
+                    });
+                }
+                return infoCommand;
+            }
+        }
 
 
 
 
-        //private void Wyswietl()
-        //{
-        //    int Id_zlecenia = WybraneZlecenie.Zlecenie_IdErp;
-        //    Lista_marsz = Bazaa.SQL_SelectMarszrut(Id_zlecenia);
-        //    Lista_bom = Bazaa.SQL_SelectBom(Id_zlecenia);
-           
-        //  //  OnPropertyChanged(nameof(Lista_marsz));
-        //}
+        private void Wyswietl()
+        {
+            int Id_zlecenia = WybraneZlecenie.Zlecenie_IdErp;
+            Lista_marsz = Bazaa.SQL_SelectMarszrut(Id_zlecenia);
+            Lista_bom = Bazaa.SQL_SelectBom(Id_zlecenia);
 
-        //private bool otworzDialogBom;
-        //public bool OtworzDialogBom
-        //{
-        //    get { return otworzDialogBom; }
-        //    set
-        //    {
-        //        otworzDialogBom = value;
-        //        OnPropertyChanged(nameof(OtworzDialogBom));
-        //    }
-        //}
+            //  OnPropertyChanged(nameof(Lista_marsz));
+        }
+
+        private bool otworzDialogBom;
+        public bool OtworzDialogBom
+        {
+            get { return otworzDialogBom; }
+            set
+            {
+                otworzDialogBom = value;
+                OnPropertyChanged(nameof(OtworzDialogBom));
+            }
+        }
         private BindingList<Model.Marszrut> lista_marsz;
         public BindingList<Model.Marszrut> Lista_marsz
         {
